@@ -3,7 +3,7 @@
 set -o errexit
 
 echo "Installing npm dependencies..."
-npm install
+npm install --include=dev
 
 echo "Building TypeScript backend..."
 npm run build
