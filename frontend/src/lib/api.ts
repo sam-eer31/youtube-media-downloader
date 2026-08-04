@@ -1,6 +1,8 @@
 // API client for communicating with the backend
 
-export const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+const rawApiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+const cleanApiUrl = rawApiUrl.replace(/\/$/, '');
+export const API_BASE = cleanApiUrl.endsWith('/api') ? cleanApiUrl : `${cleanApiUrl}/api`;
 
 /** Standard API response wrapper */
 interface ApiResponse<T = unknown> {
