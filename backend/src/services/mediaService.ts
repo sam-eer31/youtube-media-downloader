@@ -21,25 +21,25 @@ export async function fetchMediaInfo(url: string): Promise<MediaInfo> {
     throw new Error('Invalid YouTube URL');
   }
 
+  const videoQualities: QualityOption[] = [
+    { label: '360p', value: '360', estimatedSize: 'Unknown' },
+    { label: '720p', value: '720', estimatedSize: 'Unknown' },
+    { label: '1080p', value: '1080', estimatedSize: 'Unknown' },
+  ];
+
+  const audioQualities: QualityOption[] = [
+    { label: '128 kbps', value: '128', estimatedSize: 'Unknown' },
+    { label: '320 kbps', value: '320', estimatedSize: 'Unknown' },
+  ];
+
   const oembedUrl = `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`;
   
   try {
     const res = await fetch(oembedUrl);
     if (!res.ok) {
-      throw new Error('Video not found or is private.');
+      throw new Error('oEmbed failed');
     }
     const data = await res.json() as any;
-
-    const videoQualities: QualityOption[] = [
-      { label: '360p', value: '360', estimatedSize: 'Unknown' },
-      { label: '720p', value: '720', estimatedSize: 'Unknown' },
-      { label: '1080p', value: '1080', estimatedSize: 'Unknown' },
-    ];
-
-    const audioQualities: QualityOption[] = [
-      { label: '128 kbps', value: '128', estimatedSize: 'Unknown' },
-      { label: '320 kbps', value: '320', estimatedSize: 'Unknown' },
-    ];
 
     return {
       title: data.title || 'Unknown Title',
@@ -52,7 +52,36 @@ export async function fetchMediaInfo(url: string): Promise<MediaInfo> {
       audioQualities,
     };
   } catch (error) {
-    throw new Error('Failed to retrieve video information. It might be private or region-locked.');
+    // Fallback to RapidAPI if oEmbed fails (e.g. for music videos or age-restricted)
+    try {
+      const rapidApiUrl = `https://${RAPIDAPI_HOST}/api/v1/download?format=360&id=${videoId}&audioQuality=128&addInfo=true&allowExtendedDuration=false`;
+      const fallbackRes = await fetch(rapidApiUrl, {
+        method: 'GET',
+        headers: {
+          'x-rapidapi-key': RAPIDAPI_KEY,
+          'x-rapidapi-host': RAPIDAPI_HOST,
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (!fallbackRes.ok) throw new Error('RapidAPI fallback failed');
+      const fallbackData = await fallbackRes.json() as any;
+      
+      if (!fallbackData.success) throw new Error('RapidAPI fallback failed');
+
+      return {
+        title: fallbackData.title || 'Unknown Title',
+        thumbnail: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
+        duration: fallbackData.additionalInfo?.duration || 0,
+        durationFormatted: 'Unknown',
+        uploader: 'YouTube',
+        url,
+        videoQualities,
+        audioQualities,
+      };
+    } catch (fallbackError) {
+      throw new Error('Failed to retrieve video information. It might be private or region-locked.');
+    }
   }
 }
 
