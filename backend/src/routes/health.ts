@@ -16,10 +16,14 @@ router.get('/', (req, res) => {
   }
 
   try {
+    const fs = require('fs');
     const cookiesPath = require('path').join(require('../config/env').config.tempDir, 'youtube_cookies.txt');
-    ytdlpCookieTest = execSync(`"${getYtDlpExecutable()}" --cookies "${cookiesPath}" --dump-json --no-warnings --no-playlist "https://www.youtube.com/watch?v=jNQXAC9IVRw"`, { stdio: ['pipe', 'pipe', 'pipe'] }).toString().substring(0, 100);
+    ytdlpCookieTest = `Exists: ${fs.existsSync(cookiesPath)}. Size: ${fs.existsSync(cookiesPath) ? fs.statSync(cookiesPath).size : 0}`;
+    if (fs.existsSync(cookiesPath)) {
+        ytdlpCookieTest += `. Content start: ` + fs.readFileSync(cookiesPath, 'utf8').substring(0, 200);
+    }
   } catch (error: any) {
-    ytdlpCookieTest = (error.stderr ? error.stderr.toString() : (error.message || error.toString()));
+    ytdlpCookieTest = error.toString();
   }
 
   res.json({
