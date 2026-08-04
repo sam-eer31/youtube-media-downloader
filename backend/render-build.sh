@@ -4,7 +4,7 @@
 set -e
 
 echo "Installing npm dependencies..."
-npm install
+npm install --include=dev
 
 echo "Building TypeScript code..."
 npm run build
