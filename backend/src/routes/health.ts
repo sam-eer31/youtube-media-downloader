@@ -1,25 +1,24 @@
 // Health check route
-
 import { Router } from 'express';
-import { checkFfmpeg, checkYtDlp, getYtDlpExecutable } from '../utils/ffmpeg';
-import { execSync } from 'child_process';
+import fetch from 'node-fetch';
 
 const router = Router();
+const COBALT_API_URL = process.env.COBALT_API_URL || 'https://co.wuk.sh';
 
-router.get('/', (req, res) => {
-  let ytdlpOutput = 'not run';
+router.get('/', async (req, res) => {
+  let cobaltStatus = 'unknown';
   try {
-    ytdlpOutput = execSync(`"${getYtDlpExecutable()}" --version`, { stdio: ['pipe', 'pipe', 'pipe'] }).toString().trim();
+    const response = await fetch(COBALT_API_URL, { method: 'GET' });
+    cobaltStatus = response.ok ? 'up' : `error: ${response.status}`;
   } catch (error: any) {
-    ytdlpOutput = error.message || error.toString();
+    cobaltStatus = `down: ${error.message}`;
   }
 
   res.json({
     status: 'ok',
     timestamp: Date.now(),
-    ffmpeg: checkFfmpeg(),
-    ytdlp: checkYtDlp(),
-    ytdlpOutput
+    cobaltUrl: COBALT_API_URL,
+    cobaltStatus
   });
 });
 
