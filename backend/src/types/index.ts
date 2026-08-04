@@ -43,7 +43,6 @@ export interface QualityOption {
   estimatedSize: string;
 }
 
-/** Current state of a download/conversion job */
 export interface JobStatus {
   id: string;
   stage: JobStage;
@@ -52,6 +51,7 @@ export interface JobStatus {
   downloadUrl?: string;    // tmpfiles.org URL
   error?: string;
   createdAt: number;
+  rapidApiProgressId?: string;
 }
 
 /** Request body for /api/media/info */
