@@ -33,7 +33,8 @@ export async function fetchMediaInfo(url: string): Promise<MediaInfo> {
     proc.on('close', (code) => {
       if (code !== 0) {
         console.error('[yt-dlp error]', stderr);
-        reject(new Error('Could not fetch media information. Please check the URL and try again.'));
+        const errorMsg = stderr.split('\n')[0] || 'Unknown error';
+        reject(new Error(`yt-dlp failed: ${errorMsg}. Please check the URL and try again.`));
         return;
       }
 
