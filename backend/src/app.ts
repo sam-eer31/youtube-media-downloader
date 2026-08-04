@@ -9,6 +9,7 @@ import { generalLimiter } from './middleware/rateLimiter';
 import { errorHandler } from './middleware/errorHandler';
 import mediaRoutes from './routes/media';
 import healthRoutes from './routes/health';
+import publicApiRoutes from './routes/publicApi';
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use(generalLimiter);
 // API routes
 app.use('/api/media', mediaRoutes);
 app.use('/api/health', healthRoutes);
+app.use('/api/v1/public', publicApiRoutes);
 
 // 404 handler
 app.use((_req, res) => {
