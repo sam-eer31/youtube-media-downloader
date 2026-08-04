@@ -5,7 +5,7 @@ import path from 'path';
 import fs from 'fs';
 import { config } from '../config/env';
 import { MediaInfo, JobStatus, QualityOption, JobStage } from '../types';
-import { checkFfmpeg, formatDuration, estimateFileSize } from '../utils/ffmpeg';
+import { checkFfmpeg, getYtDlpExecutable, formatDuration, estimateFileSize } from '../utils/ffmpeg';
 import { generateJobId, sanitizeFilename } from '../utils/helpers';
 import fetch from 'node-fetch';
 import FormData from 'form-data';
@@ -17,7 +17,7 @@ const jobs = new Map<string, JobStatus>();
 export async function fetchMediaInfo(url: string): Promise<MediaInfo> {
   return new Promise((resolve, reject) => {
     const args = ['--dump-json', '--no-warnings', '--no-playlist', url];
-    const proc = spawn('yt-dlp', args);
+    const proc = spawn(getYtDlpExecutable(), args);
 
     let stdout = '';
     let stderr = '';
@@ -184,7 +184,7 @@ async function processDownload(jobId: string, url: string, format: 'mp3' | 'mp4'
     updateJob(jobId, 'processing', 20);
 
     await new Promise<void>((resolve, reject) => {
-      const proc = spawn('yt-dlp', ytdlpArgs);
+      const proc = spawn(getYtDlpExecutable(), ytdlpArgs);
 
       proc.stdout.on('data', (data: Buffer) => {
         const line = data.toString().trim();

@@ -11,8 +11,8 @@ npm run build
 echo "Creating bin directory..."
 mkdir -p ./bin
 
-echo "Downloading latest yt-dlp binary..."
-curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o ./bin/yt-dlp
+echo "Downloading latest standalone yt-dlp Linux binary..."
+curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_linux -o ./bin/yt-dlp
 chmod a+rx ./bin/yt-dlp
 
 echo "Downloading static FFmpeg build..."

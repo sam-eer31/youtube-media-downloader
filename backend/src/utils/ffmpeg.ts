@@ -2,10 +2,31 @@
 
 import { execSync } from 'child_process';
 
+import path from 'path';
+import fs from 'fs';
+
+/** Get the path to ffmpeg executable */
+export function getFfmpegExecutable(): string {
+  const localBin = path.join(process.cwd(), 'bin', 'ffmpeg');
+  if (fs.existsSync(localBin)) {
+    return localBin;
+  }
+  return 'ffmpeg';
+}
+
+/** Get the path to yt-dlp executable */
+export function getYtDlpExecutable(): string {
+  const localBin = path.join(process.cwd(), 'bin', 'yt-dlp');
+  if (fs.existsSync(localBin)) {
+    return localBin;
+  }
+  return 'yt-dlp';
+}
+
 /** Check if FFmpeg is installed and accessible */
 export function checkFfmpeg(): boolean {
   try {
-    execSync('ffmpeg -version', { stdio: 'ignore' });
+    execSync(`"${getFfmpegExecutable()}" -version`, { stdio: 'ignore' });
     return true;
   } catch {
     return false;
@@ -15,7 +36,7 @@ export function checkFfmpeg(): boolean {
 /** Check if yt-dlp is installed and accessible */
 export function checkYtDlp(): boolean {
   try {
-    execSync('yt-dlp --version', { stdio: 'ignore' });
+    execSync(`"${getYtDlpExecutable()}" --version`, { stdio: 'ignore' });
     return true;
   } catch {
     return false;
