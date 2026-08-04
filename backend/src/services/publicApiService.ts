@@ -170,6 +170,7 @@ async function downloadToLocal(jobId: string, url: string, ext: string): Promise
 async function uploadToTmpFiles(filePath: string): Promise<string> {
   const form = new FormData();
   form.append('file', fs.createReadStream(filePath));
+  form.append('expire', '172800'); // 48 hours in seconds
 
   const response = await fetch('https://tmpfiles.org/api/v1/upload', { 
     method: 'POST', 
