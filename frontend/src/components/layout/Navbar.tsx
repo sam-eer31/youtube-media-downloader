@@ -8,6 +8,7 @@ const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/#converter', label: 'Converter' },
   { href: '/faq', label: 'FAQ' },
+  { href: '/api-docs', label: 'API' },
   { href: '/about', label: 'About' },
 ];
 

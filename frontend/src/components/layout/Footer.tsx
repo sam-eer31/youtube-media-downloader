@@ -14,6 +14,10 @@ const legalLinks = [
   { href: '/terms', label: 'Terms of Service' },
 ];
 
+const developerLinks = [
+  { href: '/api-docs', label: 'API Documentation' },
+];
+
 const socialLinks = [
   {
     href: '#',
@@ -48,7 +52,7 @@ export function Footer() {
   return (
     <footer className="border-t border-card-border mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
           {/* Brand */}
           <div className="md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
@@ -83,6 +87,20 @@ export function Footer() {
             <h3 className="text-sm font-semibold font-heading text-foreground mb-4 uppercase tracking-wider">Legal</h3>
             <ul className="flex flex-col gap-2.5">
               {legalLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="text-sm text-muted hover:text-foreground transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Developers */}
+          <div>
+            <h3 className="text-sm font-semibold font-heading text-foreground mb-4 uppercase tracking-wider">Developers</h3>
+            <ul className="flex flex-col gap-2.5">
+              {developerLinks.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-sm text-muted hover:text-foreground transition-colors">
                     {link.label}
