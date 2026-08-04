@@ -3,7 +3,7 @@ import { Router } from 'express';
 import fetch from 'node-fetch';
 
 const router = Router();
-const COBALT_API_URL = process.env.COBALT_API_URL || 'https://co.wuk.sh';
+const COBALT_API_URL = process.env.COBALT_API_URL || 'https://cobalt-api.pewpew.moe';
 
 router.get('/', async (req, res) => {
   let cobaltStatus = 'unknown';

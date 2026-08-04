@@ -6,7 +6,7 @@ import fetch from 'node-fetch';
 /** In-memory job store */
 const jobs = new Map<string, JobStatus>();
 
-const COBALT_API_URL = process.env.COBALT_API_URL || 'https://co.wuk.sh';
+const COBALT_API_URL = process.env.COBALT_API_URL || 'https://cobalt-api.pewpew.moe';
 
 /** Fetch media metadata using YouTube oEmbed */
 export async function fetchMediaInfo(url: string): Promise<MediaInfo> {

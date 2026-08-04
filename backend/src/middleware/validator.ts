@@ -46,11 +46,11 @@ export function validateDownloadRequest(req: Request, res: Response, next: NextF
     return;
   }
 
-  const validVideoQualities = ['144p', '240p', '360p', '480p', '720p', '1080p', 'highest'];
+  const allowedVideoQualities = ['144p', '240p', '360', '360p', '480', '480p', '720', '720p', '1080', '1080p', 'max', 'highest'];
   const validAudioQualities = ['64', '128', '192', '256', '320'];
 
-  if (format === 'mp4' && !validVideoQualities.includes(quality)) {
-    res.status(400).json({ success: false, error: `Invalid video quality. Choose from: ${validVideoQualities.join(', ')}` });
+  if (format === 'mp4' && !allowedVideoQualities.includes(quality)) {
+    res.status(400).json({ success: false, error: `Invalid video quality. Choose from: ${allowedVideoQualities.join(', ')}` });
     return;
   }
 
