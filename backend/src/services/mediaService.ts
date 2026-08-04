@@ -123,11 +123,11 @@ async function processRapidApiDownload(jobId: string, videoId: string, formatTyp
   job.progress = 20;
 
   // We will start a background polling loop to update the status in our memory
-  pollRapidApiProgress(jobId, data.progressId);
+  pollRapidApiProgress(jobId, data.progressId, formatType);
 }
 
 /** Poll RapidAPI until finished */
-async function pollRapidApiProgress(jobId: string, progressId: string) {
+async function pollRapidApiProgress(jobId: string, progressId: string, formatType: 'mp3' | 'mp4') {
   const job = jobs.get(jobId);
   if (!job) return;
 
@@ -160,7 +160,7 @@ async function pollRapidApiProgress(jobId: string, progressId: string) {
         job.stage = 'completed';
         job.progress = 100;
         job.downloadUrl = data.downloadUrl;
-        job.filename = 'download' + (data.downloadUrl.includes('.mp3') ? '.mp3' : '.mp4');
+        job.filename = 'download.' + formatType;
       } else {
         // Just update progress slightly
         job.stage = 'processing';
