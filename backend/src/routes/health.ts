@@ -1,14 +1,16 @@
 // Health check route
 import { Router } from 'express';
 import fetch from 'node-fetch';
+import { getWorkingCobaltApi } from '../services/mediaService';
 
 const router = Router();
-const COBALT_API_URL = process.env.COBALT_API_URL || 'https://cobalt-api.pewpew.moe';
 
 router.get('/', async (req, res) => {
   let cobaltStatus = 'unknown';
+  let apiUrl = 'unknown';
   try {
-    const response = await fetch(COBALT_API_URL, { method: 'GET' });
+    apiUrl = await getWorkingCobaltApi();
+    const response = await fetch(apiUrl, { method: 'GET' });
     cobaltStatus = response.ok ? 'up' : `error: ${response.status}`;
   } catch (error: any) {
     cobaltStatus = `down: ${error.message}`;
@@ -17,7 +19,7 @@ router.get('/', async (req, res) => {
   res.json({
     status: 'ok',
     timestamp: Date.now(),
-    cobaltUrl: COBALT_API_URL,
+    cobaltUrl: apiUrl,
     cobaltStatus
   });
 });

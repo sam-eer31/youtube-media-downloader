@@ -6,7 +6,44 @@ import fetch from 'node-fetch';
 /** In-memory job store */
 const jobs = new Map<string, JobStatus>();
 
-const COBALT_API_URL = process.env.COBALT_API_URL || 'https://cobalt-api.pewpew.moe';
+let cachedInstances: string[] = [];
+let lastFetchTime = 0;
+
+/** Dynamically get a working Cobalt API URL */
+export async function getWorkingCobaltApi(): Promise<string> {
+  if (process.env.COBALT_API_URL) {
+    return process.env.COBALT_API_URL;
+  }
+
+  // Use cache if less than 10 minutes old
+  if (cachedInstances.length > 0 && Date.now() - lastFetchTime < 10 * 60 * 1000) {
+    // Return a random instance from the top 5
+    return cachedInstances[Math.floor(Math.random() * Math.min(5, cachedInstances.length))];
+  }
+
+  try {
+    const res = await fetch('https://instances.cobalt.best/api/instances');
+    if (!res.ok) throw new Error('Failed to fetch instances');
+    const data = await res.json() as any[];
+    
+    // Filter for v10 instances that are highly trusted and online
+    const validInstances = data
+      .filter(inst => inst.api && typeof inst.trust === 'number' && inst.score > 90)
+      .sort((a, b) => b.trust - a.trust)
+      .map(inst => inst.api);
+      
+    if (validInstances.length > 0) {
+      cachedInstances = validInstances;
+      lastFetchTime = Date.now();
+      return validInstances[0];
+    }
+  } catch (error) {
+    console.error('Failed to fetch dynamic Cobalt instances:', error);
+  }
+
+  // Fallbacks if everything else fails
+  return 'https://co.wuk.sh';
+}
 
 /** Fetch media metadata using YouTube oEmbed */
 export async function fetchMediaInfo(url: string): Promise<MediaInfo> {
@@ -106,7 +143,8 @@ async function processDownload(jobId: string, url: string, format: 'mp3' | 'mp4'
 
     updateJob(jobId, 'processing', 50);
 
-    const response = await fetch(`${COBALT_API_URL}/`, {
+    const apiUrl = await getWorkingCobaltApi();
+    const response = await fetch(`${apiUrl}/`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
