@@ -91,7 +91,7 @@ export function HeroSection() {
         <div className="fade-in fade-in-delay-3 pt-2 flex flex-row items-center justify-center gap-2 sm:gap-4 w-full px-2 sm:px-0">
           <a
             href="#converter"
-            className="btn-gradient flex items-center justify-center gap-1.5 sm:gap-3 flex-1 sm:flex-none px-2 sm:px-10 py-3.5 sm:py-4.5 text-xs sm:text-base rounded-2xl font-semibold whitespace-nowrap"
+            className="btn-gradient flex items-center justify-center gap-1.5 sm:gap-3 px-3 sm:px-10 py-3 sm:py-4.5 text-xs sm:text-base rounded-2xl font-semibold whitespace-nowrap shrink-0"
           >
             <span>Start Converting</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="bounce-arrow w-4 h-4 sm:w-[18px] sm:h-[18px] shrink-0">
@@ -100,7 +100,7 @@ export function HeroSection() {
           </a>
           <a
             href="/about"
-            className="btn-secondary flex items-center justify-center gap-1.5 sm:gap-2 flex-1 sm:flex-none px-2 sm:px-8 py-3.5 sm:py-4 text-xs sm:text-base rounded-2xl whitespace-nowrap"
+            className="btn-secondary flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-8 py-3 sm:py-4 text-xs sm:text-base rounded-2xl whitespace-nowrap shrink-0"
           >
             <span>Learn More</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0">
