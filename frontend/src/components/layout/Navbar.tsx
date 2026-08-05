@@ -42,10 +42,10 @@ export function Navbar() {
         }`}
       >
         <div className="max-w-5xl mx-auto px-4 sm:px-6 transition-all duration-500">
-          <div className={`flex items-center justify-between h-14 px-5 rounded-2xl transition-all duration-500 ${
+          <div className={`flex items-center justify-between h-14 px-5 rounded-2xl transition-all duration-500 border ${
             isScrolled
               ? 'clay'
-              : 'bg-transparent'
+              : 'bg-transparent border-transparent'
           }`}>
             {/* Logo */}
             <Link href="/" className="flex items-center group">
