@@ -477,9 +477,8 @@ body {
   border: none;
   box-shadow:
     6px 6px 14px var(--clay-shadow),
-    -3px -3px 8px rgba(232, 245, 233, 0.6),
-    inset 2px 2px 4px rgba(255, 255, 255, 0.4),
-    inset -1px -1px 2px var(--clay-shadow);
+    inset 2px 2px 5px rgba(255, 255, 255, 0.5),
+    inset -2px -2px 5px rgba(0, 0, 0, 0.15);
 }
 
 .btn-gradient::before {
@@ -496,22 +495,22 @@ body {
   opacity: 1;
 }
 
-.btn-gradient:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow:
-    8px 8px 20px var(--clay-shadow),
-    -4px -4px 12px rgba(232, 245, 233, 0.7),
-    inset 2px 2px 5px rgba(255, 255, 255, 0.5),
-    inset -1px -1px 3px var(--clay-shadow);
+@media (hover: hover) and (pointer: fine) {
+  .btn-gradient:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow:
+      10px 10px 20px var(--clay-shadow),
+      inset 3px 3px 6px rgba(255, 255, 255, 0.6),
+      inset -2px -2px 6px rgba(0, 0, 0, 0.2);
+  }
 }
 
 .btn-gradient:active {
   transform: translateY(1px) scale(0.98);
   box-shadow:
     2px 2px 8px var(--clay-shadow),
-    -1px -1px 4px rgba(232, 245, 233, 0.4),
-    inset 3px 3px 6px var(--clay-shadow),
-    inset -1px -1px 2px rgba(255, 255, 255, 0.3);
+    inset 4px 4px 8px rgba(0, 0, 0, 0.2),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.3);
 }
 
 .btn-gradient:disabled {
@@ -539,9 +538,17 @@ body {
 [data-theme="dark"] .btn-gradient {
   box-shadow:
     6px 6px 14px var(--clay-shadow),
-    -3px -3px 8px rgba(20, 50, 25, 0.3),
-    inset 2px 2px 4px rgba(255, 255, 255, 0.15),
-    inset -1px -1px 2px var(--clay-shadow);
+    inset 2px 2px 4px rgba(255, 255, 255, 0.2),
+    inset -2px -2px 5px rgba(0, 0, 0, 0.4);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  [data-theme="dark"] .btn-gradient:hover {
+    box-shadow:
+      10px 10px 20px var(--clay-shadow),
+      inset 2px 2px 5px rgba(255, 255, 255, 0.3),
+      inset -2px -2px 6px rgba(0, 0, 0, 0.5);
+  }
 }
 
 /* Secondary button */
@@ -552,22 +559,37 @@ body {
   font-weight: 600;
   border-radius: 1rem;
   padding: 0.875rem 2rem;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.7);
   transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   box-shadow:
     4px 4px 10px var(--clay-shadow),
-    -2px -2px 6px var(--clay-highlight),
-    inset 1px 1px 3px rgba(255, 255, 255, 0.4),
-    inset -1px -1px 2px var(--clay-shadow);
+    inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.7),
+    inset -1.5px -1.5px 3px rgba(18, 50, 24, 0.04);
 }
 
-.btn-secondary:hover {
-  transform: translateY(-2px);
+[data-theme="dark"] .btn-secondary {
+  border: 1px solid rgba(102, 187, 106, 0.08);
   box-shadow:
-    6px 6px 14px var(--clay-shadow),
-    -3px -3px 8px var(--clay-highlight),
-    inset 2px 2px 4px rgba(255, 255, 255, 0.5),
-    inset -1px -1px 2px var(--clay-shadow);
+    4px 4px 10px var(--clay-shadow),
+    inset 1px 1px 3px rgba(165, 214, 167, 0.08),
+    inset -1px -1px 3px rgba(0, 0, 0, 0.35);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      6px 6px 14px var(--clay-shadow),
+      inset 2px 2px 4px rgba(255, 255, 255, 0.8),
+      inset -2px -2px 4px rgba(18, 50, 24, 0.07);
+  }
+
+  [data-theme="dark"] .btn-secondary:hover {
+    box-shadow:
+      6px 6px 14px var(--clay-shadow),
+      inset 1.5px 1.5px 4px rgba(165, 214, 167, 0.12),
+      inset -2px -2px 4px rgba(0, 0, 0, 0.5);
+  }
 }
 
 /* ===== Pill Badge (Clay) ===== */
@@ -578,24 +600,23 @@ body {
   padding: 0.5rem 1.125rem;
   border-radius: 9999px;
   background: var(--clay);
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.7);
   font-size: 0.8125rem;
   font-weight: 500;
   color: var(--muted);
   box-shadow:
     4px 4px 10px var(--clay-shadow),
-    -2px -2px 6px var(--clay-highlight),
-    inset 1px 1px 3px rgba(255, 255, 255, 0.4),
-    inset -1px -1px 2px var(--clay-shadow);
+    inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.7),
+    inset -1.5px -1.5px 3px rgba(18, 50, 24, 0.04);
   transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 [data-theme="dark"] .pill-badge {
+  border: 1px solid rgba(102, 187, 106, 0.08);
   box-shadow:
     4px 4px 10px var(--clay-shadow),
-    -2px -2px 6px var(--clay-highlight),
-    inset 1px 1px 3px rgba(255, 255, 255, 0.03),
-    inset -1px -1px 2px var(--clay-shadow);
+    inset 1px 1px 3px rgba(165, 214, 167, 0.08),
+    inset -1px -1px 3px rgba(0, 0, 0, 0.35);
 }
 
 /* ===== Clay Input ===== */
