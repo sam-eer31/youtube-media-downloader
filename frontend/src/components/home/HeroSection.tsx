@@ -88,22 +88,22 @@ export function HeroSection() {
         </p>
 
         {/* CTA Buttons */}
-        <div className="fade-in fade-in-delay-3 pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div className="fade-in fade-in-delay-3 pt-2 flex flex-row items-center justify-center gap-2 sm:gap-4 w-full px-2 sm:px-0">
           <a
             href="#converter"
-            className="btn-gradient inline-flex items-center gap-3 px-10 py-4.5 text-base rounded-2xl font-semibold"
+            className="btn-gradient flex items-center justify-center gap-1.5 sm:gap-3 flex-1 sm:flex-none px-2 sm:px-10 py-3.5 sm:py-4.5 text-xs sm:text-base rounded-2xl font-semibold whitespace-nowrap"
           >
             <span>Start Converting</span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="bounce-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="bounce-arrow w-4 h-4 sm:w-[18px] sm:h-[18px] shrink-0">
               <line x1="12" y1="5" x2="12" y2="19" /><polyline points="19 12 12 19 5 12" />
             </svg>
           </a>
           <a
             href="/about"
-            className="btn-secondary inline-flex items-center gap-2 px-8 py-4 text-base rounded-2xl text-sm"
+            className="btn-secondary flex items-center justify-center gap-1.5 sm:gap-2 flex-1 sm:flex-none px-2 sm:px-8 py-3.5 sm:py-4 text-xs sm:text-base rounded-2xl whitespace-nowrap"
           >
             <span>Learn More</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0">
               <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
             </svg>
           </a>
