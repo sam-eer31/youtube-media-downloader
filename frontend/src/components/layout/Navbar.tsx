@@ -20,95 +20,147 @@ export function Navbar() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [isMobileOpen]);
+
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'glass shadow-lg shadow-black/5 border-b border-card-border'
-          : 'bg-transparent'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-violet-500/25 group-hover:shadow-violet-500/40 transition-shadow">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <polygon points="5 3 19 12 5 21 5 3" />
-              </svg>
-            </div>
-            <span className="text-xl font-bold font-heading gradient-text">
-              MediaFlow
-            </span>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="px-4 py-2 rounded-xl text-sm font-medium text-muted hover:text-foreground hover:bg-white/5 transition-all duration-200"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-
-          {/* Right side */}
-          <div className="flex items-center gap-3">
-            <ThemeToggle />
-
-            {/* Mobile menu button */}
-            <button
-              onClick={() => setIsMobileOpen(!isMobileOpen)}
-              className="md:hidden w-10 h-10 rounded-xl glass glass-hover flex items-center justify-center focus-ring"
-              aria-label="Toggle menu"
-              aria-expanded={isMobileOpen}
-            >
-              <div className="flex flex-col gap-1.5 w-5">
-                <span
-                  className={`h-0.5 bg-foreground rounded-full transition-all duration-300 ${
-                    isMobileOpen ? 'rotate-45 translate-y-2' : ''
-                  }`}
-                />
-                <span
-                  className={`h-0.5 bg-foreground rounded-full transition-all duration-300 ${
-                    isMobileOpen ? 'opacity-0' : ''
-                  }`}
-                />
-                <span
-                  className={`h-0.5 bg-foreground rounded-full transition-all duration-300 ${
-                    isMobileOpen ? '-rotate-45 -translate-y-2' : ''
-                  }`}
-                />
+    <>
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          isScrolled ? 'py-2' : 'py-4'
+        }`}
+      >
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 transition-all duration-500">
+          <div className={`flex items-center justify-between h-14 px-5 rounded-2xl transition-all duration-500 ${
+            isScrolled
+              ? 'clay'
+              : 'bg-transparent'
+          }`}>
+            {/* Logo */}
+            <Link href="/" className="flex items-center gap-2.5 group">
+              <div className="relative w-9 h-9 rounded-xl clay-sm flex items-center justify-center transition-all duration-300 group-hover:scale-105 text-accent">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="5 3 19 12 5 21 5 3" />
+                </svg>
               </div>
-            </button>
+              <span className="text-xl font-bold font-heading gradient-text">
+                MediaFlow
+              </span>
+            </Link>
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center gap-0.5">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="relative px-4 py-2 rounded-xl text-sm font-medium text-muted hover:text-foreground transition-all duration-300 group"
+                >
+                  <span className="relative z-10">{link.label}</span>
+                  {/* Hover background */}
+                  <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{
+                    background: 'rgba(102, 187, 106, 0.05)',
+                  }} />
+                  {/* Bottom accent */}
+                  <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0 group-hover:w-4/5 h-0.5 rounded-full bg-gradient-to-r from-accent to-green-400 transition-all duration-300" />
+                </Link>
+              ))}
+            </div>
+
+            {/* Right side */}
+            <div className="flex items-center gap-2">
+              <ThemeToggle />
+
+              {/* Desktop CTA */}
+              <Link
+                href="/#converter"
+                className="hidden lg:flex btn-gradient items-center gap-2 px-5 py-2.5 text-xs font-semibold rounded-xl"
+              >
+                <span>Start Converting</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="7 10 12 15 17 10" />
+                </svg>
+              </Link>
+
+              {/* Mobile menu button */}
+              <button
+                onClick={() => setIsMobileOpen(!isMobileOpen)}
+                className="md:hidden relative w-10 h-10 rounded-xl clay-sm clay-hover flex items-center justify-center focus-ring"
+                aria-label="Toggle menu"
+                aria-expanded={isMobileOpen}
+              >
+                <div className="flex flex-col gap-1.5 w-5">
+                  <span
+                    className={`h-0.5 bg-foreground rounded-full transition-all duration-400 origin-center ${
+                      isMobileOpen ? 'rotate-45 translate-y-2' : ''
+                    }`}
+                  />
+                  <span
+                    className={`h-0.5 bg-foreground rounded-full transition-all duration-400 ${
+                      isMobileOpen ? 'opacity-0 scale-x-0' : ''
+                    }`}
+                  />
+                  <span
+                    className={`h-0.5 bg-foreground rounded-full transition-all duration-400 origin-center ${
+                      isMobileOpen ? '-rotate-45 -translate-y-2' : ''
+                    }`}
+                  />
+                </div>
+              </button>
+            </div>
           </div>
         </div>
+      </nav>
 
-        {/* Mobile Navigation */}
-        {isMobileOpen && (
-          <div className="md:hidden pb-4 mobile-menu-enter">
-            <div className="glass rounded-2xl p-3 mt-2 flex flex-col gap-1">
+      {/* Mobile Navigation — Full-screen overlay */}
+      {isMobileOpen && (
+        <div className="fixed inset-0 z-40 md:hidden">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-background/90 backdrop-blur-sm"
+            onClick={() => setIsMobileOpen(false)}
+          />
+
+          {/* Menu content */}
+          <div className="relative flex flex-col items-center justify-center h-full mobile-menu-enter">
+            <div className="flex flex-col items-center gap-2 stagger-children">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsMobileOpen(false)}
-                  className="px-4 py-3 rounded-xl text-sm font-medium text-muted hover:text-foreground hover:bg-white/5 transition-all duration-200"
+                  className="px-8 py-4 rounded-2xl text-lg font-semibold font-heading text-muted hover:text-foreground hover:bg-surface transition-all duration-300"
                 >
                   {link.label}
                 </Link>
               ))}
+              <div className="mt-4 pt-4">
+                <Link
+                  href="/#converter"
+                  onClick={() => setIsMobileOpen(false)}
+                  className="btn-gradient inline-flex items-center gap-2 px-8 py-3.5 text-sm font-semibold rounded-xl"
+                >
+                  <span>Start Converting</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="7 10 12 15 17 10" />
+                  </svg>
+                </Link>
+              </div>
             </div>
           </div>
-        )}
-      </div>
-    </nav>
+        </div>
+      )}
+    </>
   );
 }

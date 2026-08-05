@@ -41,9 +41,9 @@ export default function TermsPage() {
               any content processed through our service. You must comply with all applicable copyright laws,
               terms of service of source platforms, and intellectual property regulations.
             </p>
-            <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20">
-              <p className="text-sm text-amber-400 font-semibold">⚠️ Important</p>
-              <p className="text-xs text-amber-400/80 mt-1">
+            <div className="p-4 rounded-xl bg-green-500/10 border border-green-500/20">
+              <p className="text-sm text-green-400 font-semibold">⚠️ Important</p>
+              <p className="text-xs text-green-400/80 mt-1">
                 Do not use this service to download copyrighted material without authorization. Unauthorized
                 downloading of copyrighted content may violate laws in your jurisdiction.
               </p>

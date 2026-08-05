@@ -58,7 +58,7 @@ export default function ApiDocsPage() {
             </div>
 
             <h3 className="text-sm font-semibold text-foreground mt-4 mb-2">In-Progress Response:</h3>
-            <pre className="bg-black/30 border border-card-border rounded-lg p-4 font-mono text-xs overflow-x-auto text-yellow-300">
+            <pre className="bg-black/30 border border-card-border rounded-lg p-4 font-mono text-xs overflow-x-auto text-green-300">
 {`{
   "success": true,
   "jobId": "f7a91823-c128-48b2",

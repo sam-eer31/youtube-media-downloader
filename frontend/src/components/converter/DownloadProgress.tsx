@@ -46,39 +46,45 @@ export function DownloadProgress({ job }: DownloadProgressProps) {
   const isFailed = job.stage === 'failed';
 
   return (
-    <div className="fade-in space-y-4 p-5 rounded-xl glass">
+    <div className="fade-in space-y-5 p-6 rounded-xl clay">
       {/* Stage indicator */}
-      <div className="flex items-center gap-3">
-        <div className={`${
-          isComplete ? 'text-emerald-400' : isFailed ? 'text-red-400' : 'text-violet-400 animate-pulse'
+      <div className="flex items-center gap-4">
+        <div className={`w-10 h-10 rounded-xl clay-sm flex items-center justify-center flex-shrink-0 transition-all duration-300 ${
+          isComplete
+            ? 'text-success'
+            : isFailed
+              ? 'text-error'
+              : 'text-accent'
         }`}>
-          {stageIcons[job.stage]}
+          <div className={!isComplete && !isFailed ? 'animate-pulse' : ''}>
+            {stageIcons[job.stage]}
+          </div>
         </div>
-        <div className="flex-1">
+        <div className="flex-1 min-w-0">
           <p className={`text-sm font-semibold ${
-            isComplete ? 'text-emerald-400' : isFailed ? 'text-red-400' : 'text-foreground'
+            isComplete ? 'text-success' : isFailed ? 'text-error' : 'text-foreground'
           }`}>
             {stageLabels[job.stage]}
           </p>
           {isFailed && job.error && (
-            <p className="text-xs text-red-400/80 mt-1">{job.error}</p>
+            <p className="text-xs text-error/70 mt-0.5 truncate">{job.error}</p>
           )}
         </div>
-        <span className={`text-sm font-bold ${
-          isComplete ? 'text-emerald-400' : 'text-foreground'
+        <span className={`text-2xl font-bold font-mono tabular-nums ${
+          isComplete ? 'text-success' : isFailed ? 'text-error' : 'gradient-text-static'
         }`}>
           {job.progress}%
         </span>
       </div>
 
       {/* Progress bar */}
-      <div className="w-full h-2.5 rounded-full bg-white/5 overflow-hidden">
+      <div className="relative w-full h-3 rounded-full clay-inset overflow-hidden">
         <div
           className={`h-full rounded-full transition-all duration-500 ease-out ${
             isComplete
-              ? 'bg-gradient-to-r from-emerald-500 to-emerald-400'
+              ? 'bg-gradient-to-r from-success to-emerald-400'
               : isFailed
-                ? 'bg-red-500'
+                ? 'bg-error'
                 : 'progress-bar'
           }`}
           style={{ width: `${job.progress}%` }}
@@ -86,32 +92,47 @@ export function DownloadProgress({ job }: DownloadProgressProps) {
       </div>
 
       {/* Stage timeline */}
-      <div className="flex items-center justify-between gap-2 pt-1">
+      <div className="flex items-center justify-between gap-1.5 pt-1">
         {['fetching', 'processing', 'converting', 'uploading', 'completed'].map((stage, i) => {
           const stages = ['fetching', 'processing', 'converting', 'uploading', 'completed'];
           const currentIndex = stages.indexOf(job.stage);
           const isReached = i <= currentIndex;
+          const isCurrent = i === currentIndex;
 
           return (
-            <div key={stage} className="flex items-center gap-2 flex-1 last:flex-none">
-              <div
-                className={`w-2.5 h-2.5 rounded-full flex-shrink-0 transition-all duration-300 ${
-                  isReached
-                    ? isComplete
-                      ? 'bg-emerald-400'
-                      : 'bg-violet-400 glow-pulse'
-                    : 'bg-white/10'
-                }`}
-              />
+            <div key={stage} className="flex items-center gap-1.5 flex-1 last:flex-none">
+              <div className="relative flex items-center justify-center">
+                <div
+                  className={`w-3 h-3 rounded-full flex-shrink-0 transition-all duration-500 ${
+                    isReached
+                      ? isComplete
+                        ? 'bg-success'
+                        : 'bg-accent'
+                      : ''
+                  }`}
+                  style={!isReached ? {
+                    background: 'var(--clay)',
+                    boxShadow: 'inset 1px 1px 3px var(--clay-shadow), inset -1px -1px 2px rgba(255,255,255,0.3)',
+                  } : {
+                    boxShadow: isComplete
+                      ? '0 0 8px rgba(77, 154, 62, 0.3)'
+                      : '0 0 8px rgba(102, 187, 106, 0.3)',
+                  }}
+                />
+                {isCurrent && !isComplete && !isFailed && (
+                  <div className="absolute inset-0 rounded-full bg-accent/30 animate-ping" />
+                )}
+              </div>
               {i < stages.length - 1 && (
                 <div
-                  className={`h-0.5 flex-1 rounded-full transition-all duration-500 ${
-                    i < currentIndex
+                  className={`h-0.5 flex-1 rounded-full transition-all duration-700`}
+                  style={{
+                    background: i < currentIndex
                       ? isComplete
-                        ? 'bg-emerald-400/50'
-                        : 'bg-violet-400/30'
-                      : 'bg-white/5'
-                  }`}
+                        ? 'rgba(77, 154, 62, 0.25)'
+                        : 'rgba(102, 187, 106, 0.2)'
+                      : 'rgba(102, 187, 106, 0.06)',
+                  }}
                 />
               )}
             </div>
@@ -121,12 +142,19 @@ export function DownloadProgress({ job }: DownloadProgressProps) {
 
       {/* Success message */}
       {isComplete && (
-        <div className="flex flex-col gap-3">
-          <div className="flex items-center gap-2 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
-            <span className="text-emerald-400 text-lg">🎉</span>
+        <div className="space-y-4 fade-in">
+          <div className="flex items-center gap-3 p-4 rounded-xl" style={{
+            background: 'rgba(77, 154, 62, 0.06)',
+            boxShadow: 'inset 2px 2px 5px rgba(77, 154, 62, 0.05), inset -1px -1px 3px rgba(255,255,255,0.3)',
+          }}>
+            <div className="w-8 h-8 rounded-lg clay-sm flex items-center justify-center text-success flex-shrink-0">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </div>
             <div>
-              <p className="text-sm font-semibold text-emerald-400">File is ready!</p>
-              <p className="text-xs text-emerald-400/70">Your download should start automatically.</p>
+              <p className="text-sm font-semibold text-success">File is ready!</p>
+              <p className="text-xs text-success/60">Your download should start automatically.</p>
             </div>
           </div>
           
@@ -136,7 +164,7 @@ export function DownloadProgress({ job }: DownloadProgressProps) {
               download={job.filename || 'download'}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-gradient w-full py-3 rounded-xl text-sm font-semibold flex items-center justify-center gap-2"
+              className="btn-gradient w-full py-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2.5"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />

@@ -64,7 +64,7 @@ export function ConverterCard() {
   // Show success toast when download completes
   React.useEffect(() => {
     if (jobStatus?.stage === 'completed') {
-      addToast('File downloaded successfully! 🎉', 'success');
+      addToast('File downloaded successfully!', 'success');
     }
   }, [jobStatus?.stage, addToast]);
 
@@ -74,16 +74,25 @@ export function ConverterCard() {
     <>
       <ToastContainer toasts={toasts} onRemove={removeToast} />
 
-      <div id="converter" className="w-full max-w-3xl mx-auto scroll-mt-24">
-        <div className="glass rounded-2xl overflow-hidden shadow-2xl shadow-violet-500/5">
+      <div id="converter" className="w-full max-w-3xl mx-auto scroll-mt-28">
+        <div className="clay-premium overflow-hidden">
           {/* Header */}
-          <div className="px-6 pt-6 pb-4 border-b border-card-border">
+          <div className="px-7 pt-7 pb-5" style={{ borderBottom: '2px solid rgba(102, 187, 106,0.08)' }}>
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div>
-                <h2 className="text-xl font-bold font-heading text-foreground">
+              <div className="space-y-1">
+                <h2 className="text-xl font-bold font-heading text-foreground flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-lg clay-sm flex items-center justify-center">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent">
+                      <polyline points="16 3 21 3 21 8" />
+                      <line x1="4" y1="20" x2="21" y2="3" />
+                      <polyline points="21 16 21 21 16 21" />
+                      <line x1="15" y1="15" x2="21" y2="21" />
+                      <line x1="4" y1="4" x2="9" y2="9" />
+                    </svg>
+                  </div>
                   Media Converter
                 </h2>
-                <p className="text-sm text-muted mt-0.5">
+                <p className="text-sm text-muted ml-[2.625rem]">
                   Paste a URL and choose your format
                 </p>
               </div>
@@ -92,10 +101,10 @@ export function ConverterCard() {
           </div>
 
           {/* Input area */}
-          <div className="p-6 space-y-4">
+          <div className="p-7 space-y-5">
             <div className="flex flex-col sm:flex-row gap-3">
-              <div className="flex-1 relative">
-                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted">
+              <div className="flex-1 relative group">
+                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted group-focus-within:text-accent transition-colors duration-300 z-10">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
                     <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
@@ -106,8 +115,8 @@ export function ConverterCard() {
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder="Paste your supported media URL here"
-                  className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-card-border text-foreground placeholder-muted/50 focus:outline-none focus:border-violet-500/50 focus:ring-2 focus:ring-violet-500/20 transition-all duration-300 text-sm"
+                  placeholder="Paste your supported media URL here..."
+                  className="neon-input pl-12"
                   disabled={isLoading}
                   id="url-input"
                 />
@@ -115,19 +124,20 @@ export function ConverterCard() {
               <button
                 onClick={handleConvert}
                 disabled={isLoading || !url.trim()}
-                className="btn-gradient px-8 py-4 rounded-xl text-sm font-semibold disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2 min-w-[140px]"
+                className="btn-gradient px-8 py-4 rounded-xl text-sm font-semibold disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2.5 min-w-[150px]"
                 id="convert-button"
               >
                 {isLoading ? (
                   <>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="animate-spin">
-                      <path d="M21 12a9 9 0 11-6.219-8.56" />
-                    </svg>
+                    <div className="relative w-4 h-4">
+                      <div className="absolute inset-0 rounded-full border-2 border-foreground/20" />
+                      <div className="absolute inset-0 rounded-full border-2 border-foreground border-t-transparent orbit" />
+                    </div>
                     <span>Analyzing...</span>
                   </>
                 ) : (
                   <>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="16 3 21 3 21 8" />
                       <line x1="4" y1="20" x2="21" y2="3" />
                       <polyline points="21 16 21 21 16 21" />
@@ -144,9 +154,9 @@ export function ConverterCard() {
             {mediaInfo && (
               <button
                 onClick={handleReset}
-                className="text-xs text-muted hover:text-foreground transition-colors flex items-center gap-1"
+                className="group text-xs text-muted hover:text-foreground transition-all duration-300 flex items-center gap-1.5"
               >
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:rotate-[-360deg] transition-transform duration-700">
                   <polyline points="1 4 1 10 7 10" />
                   <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
                 </svg>
@@ -157,7 +167,7 @@ export function ConverterCard() {
 
           {/* Results area */}
           {(isLoading || mediaInfo || infoError) && (
-            <div className="px-6 pb-6 space-y-4">
+            <div className="px-7 pb-7 space-y-5">
               {isLoading && <SkeletonLoader />}
 
               {mediaInfo && (
@@ -179,13 +189,21 @@ export function ConverterCard() {
               )}
 
               {infoError && !isLoading && (
-                <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 flex items-start gap-3">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-red-400 flex-shrink-0 mt-0.5" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" />
-                  </svg>
+                <div className="p-5 rounded-xl flex items-start gap-3" style={{
+                  background: 'rgba(201, 64, 64, 0.06)',
+                  boxShadow: 'inset 2px 2px 5px rgba(201, 64, 64, 0.05), inset -1px -1px 3px rgba(255,255,255,0.3)',
+                }}>
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{
+                    background: 'rgba(201, 64, 64, 0.1)',
+                    boxShadow: 'inset 1px 1px 2px rgba(255,255,255,0.2)',
+                  }}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-error" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" />
+                    </svg>
+                  </div>
                   <div>
-                    <p className="text-sm font-semibold text-red-400">Error</p>
-                    <p className="text-xs text-red-400/70 mt-0.5">{infoError}</p>
+                    <p className="text-sm font-semibold text-error">Something went wrong</p>
+                    <p className="text-xs text-error/70 mt-1 leading-relaxed">{infoError}</p>
                   </div>
                 </div>
               )}
@@ -194,9 +212,9 @@ export function ConverterCard() {
         </div>
 
         {/* Disclaimer */}
-        <p className="text-center text-xs text-muted/50 mt-4 px-4">
+        <p className="text-center text-xs text-muted/50 mt-5 px-4">
           Only convert media you have the right to download. By using this service, you agree to our{' '}
-          <a href="/terms" className="underline hover:text-muted transition-colors">Terms of Service</a>.
+          <a href="/terms" className="text-muted/70 hover:text-muted transition-colors link-underline">Terms of Service</a>.
         </p>
       </div>
     </>

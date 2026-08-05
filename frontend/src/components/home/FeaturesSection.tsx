@@ -59,30 +59,51 @@ const features = [
 
 export function FeaturesSection() {
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto">
+    <section className="py-24 px-4 sm:px-6 lg:px-8 relative">
+      {/* Background accent */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] opacity-20" style={{
+          background: 'radial-gradient(ellipse, rgba(102, 187, 106, 0.08) 0%, transparent 70%)',
+        }} />
+      </div>
+
+      <div className="relative max-w-6xl mx-auto">
         {/* Section header */}
-        <div className="text-center mb-14">
-          <h2 className="text-3xl sm:text-4xl font-bold font-heading text-foreground">
+        <div className="text-center mb-16 space-y-4">
+          <div className="flex justify-center">
+            <span className="pill-badge text-xs">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+              Why MediaFlow
+            </span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading text-foreground leading-tight">
             Why choose <span className="gradient-text">MediaFlow</span>?
           </h2>
-          <p className="text-muted mt-3 max-w-xl mx-auto">
+          <p className="text-muted mt-3 max-w-xl mx-auto text-lg">
             Built for speed, security, and simplicity. Everything you need, nothing you don&apos;t.
           </p>
+          {/* Decorative gradient underline */}
+          <div className="flex justify-center pt-2">
+            <div className="w-24 h-1.5 rounded-full bg-gradient-to-r from-accent to-green-300 opacity-50" />
+          </div>
         </div>
 
         {/* Features grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {features.map((feature, i) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children">
+          {features.map((feature) => (
             <div
               key={feature.title}
-              className="group p-6 rounded-2xl glass glass-hover"
-              style={{ animationDelay: `${i * 0.1}s` }}
+              className="group neon-card p-7 relative"
             >
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-500/20 to-cyan-500/20 flex items-center justify-center text-violet-400 group-hover:from-violet-500/30 group-hover:to-cyan-500/30 transition-all duration-300 mb-4">
+              {/* Icon */}
+              <div className="w-12 h-12 rounded-xl clay-sm flex items-center justify-center mb-5 transition-all duration-400 group-hover:scale-110 text-accent">
                 {feature.icon}
               </div>
-              <h3 className="text-base font-semibold font-heading text-foreground mb-2">
+
+              {/* Content */}
+              <h3 className="text-base font-semibold font-heading text-foreground mb-2.5 group-hover:text-foreground transition-colors">
                 {feature.title}
               </h3>
               <p className="text-sm text-muted leading-relaxed">
