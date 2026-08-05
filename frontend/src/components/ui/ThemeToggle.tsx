@@ -15,6 +15,8 @@ export function ThemeToggle() {
   }, []);
 
   const toggle = () => {
+    document.documentElement.classList.add('theme-switching');
+    
     const next = isDark ? 'light' : 'dark';
     setIsDark(!isDark);
     if (next === 'dark') {
@@ -23,6 +25,11 @@ export function ThemeToggle() {
       document.documentElement.removeAttribute('data-theme');
     }
     localStorage.setItem('theme', next);
+
+    // Remove the class immediately after the browser paints the new variables
+    setTimeout(() => {
+      document.documentElement.classList.remove('theme-switching');
+    }, 10);
   };
 
   return (

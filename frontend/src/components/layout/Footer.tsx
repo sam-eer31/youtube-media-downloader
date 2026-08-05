@@ -20,29 +20,11 @@ const developerLinks = [
 
 const socialLinks = [
   {
-    href: '#',
-    label: 'Twitter',
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M4 4l11.733 16h4.267l-11.733 -16h-4.267z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" />
-      </svg>
-    ),
-  },
-  {
-    href: '#',
+    href: 'https://github.com/sam-eer31/youtube-media-downloader',
     label: 'GitHub',
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-      </svg>
-    ),
-  },
-  {
-    href: '#',
-    label: 'YouTube',
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="5" width="20" height="14" rx="3" /><polygon points="10 9 15 12 10 15 10 9" />
       </svg>
     ),
   },
@@ -61,13 +43,9 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8">
           {/* Brand */}
           <div className="md:col-span-4 space-y-5">
-            <div className="flex items-center gap-2.5">
-              <div className="relative w-9 h-9 rounded-xl clay-sm flex items-center justify-center text-accent">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <polygon points="5 3 19 12 5 21 5 3" />
-                </svg>
-              </div>
-              <span className="text-lg font-bold font-heading gradient-text">MediaFlow</span>
+            <div className="flex items-center">
+              <img src="/logo.png" alt="MediaFlow Logo" className="h-8 w-auto logo-light" />
+              <img src="/logo-dark.png" alt="MediaFlow Logo" className="h-8 w-auto logo-dark" />
             </div>
             <p className="text-sm text-muted leading-relaxed max-w-xs">
               Convert media files quickly and securely. Premium quality conversions with a beautiful experience — completely free.

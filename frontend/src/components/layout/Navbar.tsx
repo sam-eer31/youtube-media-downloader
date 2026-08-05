@@ -48,15 +48,9 @@ export function Navbar() {
               : 'bg-transparent'
           }`}>
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="relative w-9 h-9 rounded-xl clay-sm flex items-center justify-center transition-all duration-300 group-hover:scale-105 text-accent">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <polygon points="5 3 19 12 5 21 5 3" />
-                </svg>
-              </div>
-              <span className="text-xl font-bold font-heading gradient-text">
-                MediaFlow
-              </span>
+            <Link href="/" className="flex items-center group">
+              <img src="/logo.png" alt="MediaFlow Logo" className="h-9 w-auto transition-transform duration-300 group-hover:scale-105 logo-light" />
+              <img src="/logo-dark.png" alt="MediaFlow Logo" className="h-9 w-auto transition-transform duration-300 group-hover:scale-105 logo-dark" />
             </Link>
 
             {/* Desktop Navigation */}
