@@ -1,4 +1,6 @@
-import React from 'react';
+"use client";
+
+import React, { useState, useEffect, useRef } from 'react';
 
 const features = [
   {
@@ -58,6 +60,65 @@ const features = [
 ];
 
 export function FeaturesSection() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (scrollRef.current && scrollRef.current.offsetWidth > 0) {
+        const nextIndex = (activeIndex + 1) % features.length;
+        const innerContainer = scrollRef.current.firstChild as HTMLElement;
+        if (innerContainer && innerContainer.children[nextIndex]) {
+          const child = innerContainer.children[nextIndex] as HTMLElement;
+          scrollRef.current.scrollTo({
+            left: child.offsetLeft - (scrollRef.current.offsetWidth - child.offsetWidth) / 2,
+            behavior: 'smooth'
+          });
+        }
+      }
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [activeIndex]);
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLDivElement;
+    const scrollPosition = target.scrollLeft;
+    const innerContainer = target.firstChild as HTMLElement;
+    if (!innerContainer) return;
+    
+    let closestIndex = 0;
+    let minDistance = Infinity;
+    const center = scrollPosition + target.offsetWidth / 2;
+    
+    Array.from(innerContainer.children).forEach((child, index) => {
+      const childElement = child as HTMLElement;
+      const childCenter = childElement.offsetLeft + childElement.offsetWidth / 2;
+      const distance = Math.abs(childCenter - center);
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestIndex = index;
+      }
+    });
+    
+    if (closestIndex !== activeIndex) {
+      setActiveIndex(closestIndex);
+    }
+  };
+
+  const scrollTo = (index: number) => {
+    if (scrollRef.current) {
+      const innerContainer = scrollRef.current.firstChild as HTMLElement;
+      if (innerContainer && innerContainer.children[index]) {
+        const child = innerContainer.children[index] as HTMLElement;
+        scrollRef.current.scrollTo({
+          left: child.offsetLeft - (scrollRef.current.offsetWidth - child.offsetWidth) / 2,
+          behavior: 'smooth'
+        });
+      }
+      setActiveIndex(index);
+    }
+  };
+
   return (
     <section className="py-24 px-4 sm:px-6 lg:px-8 relative">
       {/* Background accent */}
@@ -90,15 +151,58 @@ export function FeaturesSection() {
           </div>
         </div>
 
-        {/* Features grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children">
+        {/* Mobile Swipeable Carousel */}
+        <div 
+          ref={scrollRef}
+          onScroll={handleScroll}
+          className="sm:hidden flex overflow-x-auto snap-x snap-mandatory w-[calc(100%+2rem)] -mx-4 px-4 py-6 -my-6 pb-2" 
+          style={{ scrollbarWidth: 'none' }}
+        >
+          <div className="flex gap-4 items-stretch">
+            {features.map((feature, i) => (
+              <div
+                key={`feat-m-${i}`}
+                className="group neon-card p-6 relative w-[280px] shrink-0 flex flex-col snap-center"
+              >
+                {/* Icon */}
+                <div className="w-12 h-12 rounded-xl clay-sm flex items-center justify-center mb-5 transition-all duration-400 group-hover:scale-110 text-accent shrink-0">
+                  {feature.icon}
+                </div>
+                {/* Content */}
+                <h3 className="text-base font-semibold font-heading text-foreground mb-2.5 group-hover:text-foreground transition-colors">
+                  {feature.title}
+                </h3>
+                <p className="text-sm text-muted leading-relaxed">
+                  {feature.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Dot Indicators */}
+        <div className="sm:hidden flex justify-center gap-2 mt-8 mb-8">
+          {features.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => scrollTo(i)}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                activeIndex === i ? 'w-6 bg-accent' : 'w-1.5 bg-muted opacity-40 hover:opacity-100'
+              }`}
+              aria-label={`Go to slide ${i + 1}`}
+            />
+          ))}
+        </div>
+
+        {/* Desktop/Tablet Grid */}
+        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children">
           {features.map((feature) => (
             <div
               key={feature.title}
-              className="group neon-card p-7 relative"
+              className="group neon-card p-7 relative flex flex-col"
             >
               {/* Icon */}
-              <div className="w-12 h-12 rounded-xl clay-sm flex items-center justify-center mb-5 transition-all duration-400 group-hover:scale-110 text-accent">
+              <div className="w-12 h-12 rounded-xl clay-sm flex items-center justify-center mb-5 transition-all duration-400 group-hover:scale-110 text-accent shrink-0">
                 {feature.icon}
               </div>
 

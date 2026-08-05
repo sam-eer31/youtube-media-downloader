@@ -166,7 +166,32 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-6 sm:gap-10">
+          {/* Mobile Marquee */}
+          <div className="sm:hidden flex items-center marquee-container w-[calc(100%+2rem)] -mx-4 py-4 -my-4">
+            <div className="flex items-center marquee-content" style={{ animationDuration: '30s' }}>
+              {[...audiences, ...audiences, ...audiences].map((item, i) => (
+                <div key={`m1-${i}`} className="flex flex-col items-center gap-3 group cursor-default shrink-0">
+                  <div className="w-16 h-16 rounded-2xl clay flex items-center justify-center text-accent">
+                    {item.icon}
+                  </div>
+                  <span className="text-xs text-muted font-medium">{item.label}</span>
+                </div>
+              ))}
+            </div>
+            <div className="flex items-center marquee-content" aria-hidden="true" style={{ animationDuration: '30s' }}>
+              {[...audiences, ...audiences, ...audiences].map((item, i) => (
+                <div key={`m2-${i}`} className="flex flex-col items-center gap-3 group cursor-default shrink-0">
+                  <div className="w-16 h-16 rounded-2xl clay flex items-center justify-center text-accent">
+                    {item.icon}
+                  </div>
+                  <span className="text-xs text-muted font-medium">{item.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Desktop/Tablet Grid */}
+          <div className="hidden sm:flex flex-wrap justify-center gap-6 sm:gap-10">
             {audiences.map((item) => (
               <div key={item.label} className="flex flex-col items-center gap-3 group cursor-default">
                 <div className="w-16 h-16 rounded-2xl clay clay-hover flex items-center justify-center text-accent group-hover:scale-105 transition-transform duration-300">

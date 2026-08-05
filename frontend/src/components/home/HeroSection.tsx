@@ -111,7 +111,44 @@ export function HeroSection() {
 
         {/* Stats row */}
         <div className="fade-in fade-in-delay-4 pt-12">
-          <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
+          {/* Mobile Marquee */}
+          <div className="sm:hidden flex items-center marquee-container w-[calc(100%+2rem)] -mx-4 py-4 -my-4">
+            <div className="flex items-center marquee-content" style={{ animationDuration: '40s' }}>
+              {[...stats, ...stats, ...stats].map((stat, i) => (
+                <div
+                  key={`m1-${i}`}
+                  className="group flex items-center gap-2.5 px-3.5 py-2.5 rounded-[1rem] clay clay-hover cursor-default shrink-0"
+                >
+                  <div className="w-8 h-8 rounded-[0.75rem] clay-sm flex items-center justify-center flex-shrink-0 [&>svg]:w-4 [&>svg]:h-4">
+                    {stat.icon}
+                  </div>
+                  <div className="text-left">
+                    <p className="text-sm font-bold font-heading gradient-text-static leading-none mb-0.5">{stat.value}</p>
+                    <p className="text-[0.65rem] text-muted leading-tight whitespace-nowrap">{stat.label}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="flex items-center marquee-content" aria-hidden="true" style={{ animationDuration: '40s' }}>
+              {[...stats, ...stats, ...stats].map((stat, i) => (
+                <div
+                  key={`m2-${i}`}
+                  className="group flex items-center gap-2.5 px-3.5 py-2.5 rounded-[1rem] clay clay-hover cursor-default shrink-0"
+                >
+                  <div className="w-8 h-8 rounded-[0.75rem] clay-sm flex items-center justify-center flex-shrink-0 [&>svg]:w-4 [&>svg]:h-4">
+                    {stat.icon}
+                  </div>
+                  <div className="text-left">
+                    <p className="text-sm font-bold font-heading gradient-text-static leading-none mb-0.5">{stat.value}</p>
+                    <p className="text-[0.65rem] text-muted leading-tight whitespace-nowrap">{stat.label}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Desktop/Tablet Static Flex */}
+          <div className="hidden sm:flex flex-wrap justify-center gap-4 sm:gap-6">
             {stats.map((stat) => (
               <div
                 key={stat.label}
