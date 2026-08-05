@@ -93,10 +93,10 @@ export default function HomePage() {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 relative">
+      <section className="py-12 sm:py-20 px-4 sm:px-6 lg:px-8 relative">
         <div className="max-w-5xl mx-auto">
           {/* Section header */}
-          <div className="text-center mb-14 space-y-4">
+          <div className="text-center mb-10 sm:mb-14 space-y-4">
             <div className="flex justify-center">
               <span className="pill-badge text-xs">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent">
@@ -155,8 +155,8 @@ export default function HomePage() {
       <FeaturesSection />
 
       {/* Social Proof / Trust Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center space-y-10">
+      <section className="py-12 sm:py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto text-center space-y-8 sm:space-y-10">
           <div className="space-y-4">
             <h2 className="text-3xl sm:text-4xl font-bold font-heading">
               Trusted by <span className="gradient-text">Creators</span>
